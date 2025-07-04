@@ -1,26 +1,25 @@
 "use client";
-import MainContainer from "@/components/Navigation/MainContainer";
-import { Spinner, Box, Heading } from "@chakra-ui/react";
-import { React, useEffect } from "react";
+import React from "react";
 import Layout from "@/components/Layout/Layout";
+import MainContainer from "@/components/Navigation/MainContainer";
 import TaskList from "@/components/TaskList/TaskList";
 import useSWR from "swr";
+import { Box, Heading, Spinner } from "@chakra-ui/react";
 import { useTaskStore } from "@/store";
-import AddTaskInput from "@/components/Task/AddTaskInput";
-import SetupModal from "@/components/Modal/Modal";
 
-const IndexPage = () => {
-  const { data: tasks, isLoading, error } = useSWR("/api/tasks");
-
+const DonePage = () => {
   const setActiveList = useTaskStore((state) => state.setActiveList);
-  const setCountingTasks = useTaskStore((state) => state.setCountingTasks);
+  setActiveList("TaskTango - Done");
 
-  useEffect(() => {
-    setActiveList("TaskTango - Home Page");
-    tasks && setCountingTasks(tasks);
-  });
+  const {
+    data: doneTasks,
+    isLoading,
+    error,
+  } = useSWR("/api/tasks", async () =>
+    (await fetch("/api/status/done")).json()
+  );
 
-  if (!tasks) {
+  if (!doneTasks) {
     return;
   }
 
@@ -49,14 +48,12 @@ const IndexPage = () => {
   }
 
   return (
-    <Layout title="TaskTango - Home Page">
-      <MainContainer mainTitle="All Tasks">
-        <SetupModal />
-        <AddTaskInput />
-        <TaskList tasks={tasks} />
+    <Layout title="TaskTango - Done">
+      <MainContainer mainTitle="Done">
+        <TaskList tasks={doneTasks} />
       </MainContainer>
     </Layout>
   );
 };
 
-export default IndexPage;
+export default DonePage;

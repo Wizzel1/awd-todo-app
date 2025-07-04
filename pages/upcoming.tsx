@@ -39,7 +39,7 @@ const UpcomingPage = () => {
   return (
     <Layout title="TaskTango - Upcoming">
       <MainContainer mainTitle="Upcoming">
-        <AddTaskInput />
+        <AddTaskInput afterSubmit={() => {}} />
         <TaskList tasks={upcomingTasks} />
       </MainContainer>
     </Layout>
