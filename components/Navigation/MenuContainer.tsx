@@ -29,7 +29,7 @@ export default function MenuContainer() {
       
       <Flex direction={["none", "column"]} gap={["0", "2"]}>
         <Box display={["none", "unset"]}>
-          <Heading paddingbottom="10px" as="h5" size="2xl" mb={8}>
+          <Heading paddingBottom="10px" as="h5" size="2xl" mb={8}>
             Menu
           </Heading>
           

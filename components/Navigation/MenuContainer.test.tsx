@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import "@testing-library/jest-dom";
 import MenuContainer from "./MenuContainer";
+import '@testing-library/jest-dom'
 
 test("renders a heading", () => {
   render(<MenuContainer />);

@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Heading, Box, Badge } from "@chakra-ui/react";
 
-export default function MainContainer({ mainTitle, children }) {
+export default function MainContainer({ mainTitle, children }: { mainTitle: string; children: React.ReactNode }) {
   return (
     <Box
       p="6"

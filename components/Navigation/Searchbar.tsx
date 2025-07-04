@@ -13,7 +13,7 @@ export default function Search() {
   const setSearchTerm = useTaskStore((state) => state.setSearchTerm);
   const [inputValue, setInputValue] = useState("");
 
-  const handleSearchChange = (event) => {
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
     setSearchTerm(event.target.value);
   };
@@ -24,7 +24,7 @@ export default function Search() {
   };
 
   return (
-    <form width="100%">
+    <form style={{ width: "100%" }}>
       <InputGroup>
         <InputLeftElement pointerEvents="none">
           <Search2Icon color="black" />
