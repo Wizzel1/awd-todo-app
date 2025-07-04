@@ -1,13 +1,13 @@
+import test, { expect, Page } from "@playwright/test";
 import randomItem from "./utils/utils";
-const { test, expect } = require("@playwright/test");
 
-test.beforeEach(async ({ page }) => {
+test.beforeEach(async ({ page }: { page: Page }) => {
   await page.goto("https://tasktango.vercel.app/");
   await expect(page).toHaveTitle("TaskTango - Home Page");
 });
 
 test.describe("New Todo", () => {
-  test("Add a task and verify it appears in the list", async ({ page }) => {
+  test("Add a task and verify it appears in the list", async ({ page }: { page: Page }) => {
     // Wait for the new task input to appear
     const newTaskInput = await page.waitForSelector(
       'input[placeholder="Add new task"]'
@@ -32,7 +32,9 @@ test.describe("New Todo", () => {
   });
 
   test("Add a task and Delete it and verify it appears in the list", async ({
-    page,
+    page
+  }: {
+    page: Page;
   }) => {
     // Wait for the new task input to appear
     const newTaskInput = await page.waitForSelector(
