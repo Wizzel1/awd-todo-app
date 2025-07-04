@@ -1,4 +1,4 @@
-export async function editTask(taskId, taskTitle) {
+export async function editTask(taskId: string, taskTitle: string) {
   const response = await fetch(`/api/tasks/${taskId}`, {
     method: "PUT",
     headers: {
