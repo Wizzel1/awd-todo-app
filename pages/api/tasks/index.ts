@@ -1,7 +1,8 @@
 import dbConnect from "@/db/connect";
 import Task from "@/db/models/Task";
+import { NextApiRequest, NextApiResponse } from "next";
 
-export default async function handler(request, response) {
+export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   await dbConnect();
 
   if (request.method === "GET") {
@@ -16,8 +17,11 @@ export default async function handler(request, response) {
       const record = await task.save();
       return response.status(201).json(record);
     } catch (error) {
-      console.error(error);
-      return response.status(400).json({ error: error.message });
+      if (error instanceof Error) {
+        console.error(error);
+        return response.status(400).json({ error: error.message });
+      }
+      return response.status(400).json({ error: "An unknown error occurred" });
     }
   }
 }
