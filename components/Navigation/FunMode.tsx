@@ -16,7 +16,12 @@ export default function FunMode() {
       <FormLabel htmlFor="fun-mode" mb="0">
         Fun Mode
       </FormLabel>
-      <Switch colorScheme='teal' id="fun-mode" isChecked={funMode} onChange={toggleFunMode} />
+      <Switch
+        colorScheme="teal"
+        id="fun-mode"
+        isChecked={funMode}
+        onChange={toggleFunMode}
+      />
     </FormControl>
   );
 }

@@ -1,10 +1,16 @@
-import { SWRConfig } from "swr";
+import { Box, ColorModeScript } from "@chakra-ui/react";
 import Head from "next/head";
-import MenuContainer from "../Navigation/MenuContainer";
-import { ColorModeScript, Box, Wrap, HStack } from "@chakra-ui/react";
+import { SWRConfig } from "swr";
 import { theme } from "../../theme";
+import MenuContainer from "../Navigation/MenuContainer";
 
-const Layout = ({ children, title }: { children: React.ReactNode; title: string }) => {
+const Layout = ({
+  children,
+  title,
+}: {
+  children: React.ReactNode;
+  title: string;
+}) => {
   return (
     <SWRConfig>
       <Head>

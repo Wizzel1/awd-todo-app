@@ -1,4 +1,5 @@
 type Task = {
+  _id: number;
   title: string;
   completed: boolean;
   created_at?: Date;

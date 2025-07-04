@@ -1,20 +1,19 @@
+import { useTaskStore } from "@/store";
 import {
   CheckCircleIcon,
-  CopyIcon,
-  RepeatClockIcon,
   HamburgerIcon,
+  RepeatClockIcon,
 } from "@chakra-ui/icons";
 import {
-  List,
-  ListItem,
-  ListIcon,
-  Box,
   Badge,
+  Box,
   Heading,
+  List,
+  ListIcon,
+  ListItem,
   Spacer,
   Text,
 } from "@chakra-ui/react";
-import { useTaskStore } from "@/store";
 
 export default function ListsSection() {
   const activeList = useTaskStore((state) => state.activeList);
@@ -30,8 +29,7 @@ export default function ListsSection() {
       <Heading display={["none", "unset"]} paddingTop="3" size="sm" mb={3}>
         Lists
       </Heading>
-      <Box fontSize="sm" width={["250px", "100%"]}
-      alignSelf="center">
+      <Box fontSize="sm" width={["250px", "100%"]} alignSelf="center">
         <nav>
           <List
             width={["100%", "inherit"]}

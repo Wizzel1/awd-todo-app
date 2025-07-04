@@ -1,27 +1,31 @@
+import { useTaskStore } from "@/store";
+import { DeleteIcon } from "@chakra-ui/icons";
 import {
   Checkbox,
-  ListItem,
-  UnorderedList,
-  IconButton,
-  Spacer,
-  HStack,
-  Input,
   Divider,
-  Flex,
-  useToast,
   Editable,
   EditableInput,
   EditablePreview,
+  Flex,
+  HStack,
+  IconButton,
+  Input,
+  ListItem,
+  Spacer,
+  UnorderedList,
+  useToast,
 } from "@chakra-ui/react";
-import { DeleteIcon } from "@chakra-ui/icons";
+import JSConfetti from "js-confetti";
+import { useSWRConfig } from "swr";
+import TaskType from "../../types/task";
+import { completedTask } from "../Task/Functions/completedTask";
 import { deleteTask } from "../Task/Functions/deleteTask";
 import { editTask } from "../Task/Functions/editTask";
-import { completedTask } from "../Task/Functions/completedTask";
-import { useSWRConfig } from "swr";
-import { useTaskStore } from "@/store";
-import JSConfetti from "js-confetti";
+interface Props {
+  tasks: TaskType[];
+}
 
-export default function TaskList({ tasks }) {
+export default function TaskList({ tasks }: Props) {
   const toast = useToast();
   const { mutate } = useSWRConfig();
   const funMode = useTaskStore((state) => state.funMode);
@@ -32,7 +36,7 @@ export default function TaskList({ tasks }) {
     task.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleDeleteTask = async (taskId) => {
+  const handleDeleteTask = async (taskId: number) => {
     try {
       await deleteTask(taskId);
       mutate("/api/tasks");
@@ -44,22 +48,25 @@ export default function TaskList({ tasks }) {
         isClosable: true,
       });
     } catch (error) {
-      mutate("/api/tasks");
-      toast({
-        title: "Error deleting task",
-        description: error.message,
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-      });
+      if (error instanceof Error) {
+        mutate("/api/tasks");
+        toast({
+          title: "Error deleting task",
+          description: error.message,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
     }
   };
-  const handleEditTask = async (taskId, nextValue) => {
+  const handleEditTask = async (taskId: number, nextValue: string) => {
     try {
       mutate(
         "/api/tasks",
-        (data) => {
-          return data.map((task) => {
+        (data: TaskType[] | undefined) => {
+          if (!data) return data;
+          return data.map((task: TaskType) => {
             if (task._id === taskId) {
               return { ...task, title: nextValue };
             }
@@ -76,7 +83,7 @@ export default function TaskList({ tasks }) {
     }
   };
 
-  const handleCompletedTask = async (taskId) => {
+  const handleCompletedTask = async (taskId: number) => {
     try {
       const task = await completedTask(taskId);
       if (task.completed) {
@@ -96,13 +103,15 @@ export default function TaskList({ tasks }) {
         }
       }
     } catch (error) {
-      toast({
-        title: "Error completing task",
-        description: error.message,
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-      });
+      if (error instanceof Error) {
+        toast({
+          title: "Error completing task",
+          description: error.message,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
     } finally {
       mutate("/api/tasks");
     }
@@ -122,11 +131,10 @@ export default function TaskList({ tasks }) {
               ></Checkbox>
 
               <Editable
-                
                 defaultValue={task.title}
                 onSubmit={(nextValue) => handleEditTask(task._id, nextValue)}
               >
-                <EditablePreview as={task.completed ? "del" : ""} />
+                <EditablePreview as={task.completed ? "del" : "span"} />
                 <Input
                   as={EditableInput}
                   focusBorderColor="teal.400"

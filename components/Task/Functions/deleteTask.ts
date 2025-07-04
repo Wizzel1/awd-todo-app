@@ -1,4 +1,4 @@
-export async function deleteTask(taskId: string) {
+export async function deleteTask(taskId: number) {
   const response = await fetch(`/api/tasks/${taskId}`, { method: "DELETE" });
 
   if (!response.ok) {
