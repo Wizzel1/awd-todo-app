@@ -1,7 +1,7 @@
-import { Schema, model } from "mongoose";
-import TaskType  from "../../types/task";
+import mongoose from "mongoose";
+const { Schema } = mongoose;
 
-const taskSchema = new Schema<TaskType>(
+const taskSchema = new Schema(
   {
     title: { type: String, required: true },
     completed: { type: Boolean, required: true, default: false },
@@ -9,6 +9,6 @@ const taskSchema = new Schema<TaskType>(
   { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
 );
 
-const Task = model<TaskType>("Task", taskSchema);
+const Task = mongoose.models.Task || mongoose.model("Task", taskSchema);
 
 export default Task;

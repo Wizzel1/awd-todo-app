@@ -1,7 +1,10 @@
 import { Mongoose } from "mongoose";
 
 declare global {
-  var mongoose: { conn: Mongoose | null; promise: Promise<Mongoose> | null };
+  var mongoose: {
+    promise: Promise<Mongoose> | null;
+    conn: Mongoose | null;
+  };
 }
 
 export {};
